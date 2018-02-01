@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 
 
 def explore_input_images(car_images, noncar_images, n, out_dir=None):
-    
+    """
+    Helper function to explore the input data.
+    """
     data_dict = {}
     
     # Define a key in data_dict "n_cars" and store the number of car images

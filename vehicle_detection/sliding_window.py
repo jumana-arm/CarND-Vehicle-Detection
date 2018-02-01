@@ -90,6 +90,8 @@ def detect_cars(img, ystart, ystop, scale, svc, cspace, hog_channel, orient, pix
 def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
     # Make a copy of the image
     imcopy = np.copy(img)
+    #Get a random color
+    color = (np.random.randint(0,255), np.random.randint(0,255), np.random.randint(0,255))
     # Iterate through the bounding boxes
     for bbox in bboxes:
         # Draw a rectangle given bbox coordinates
@@ -99,6 +101,9 @@ def draw_boxes(img, bboxes, color=(0, 0, 255), thick=6):
 
 
 def add_heat(heatmap, bbox_list):
+    """
+    Get heatmap of all detected car positions from sliding window
+    """
     # Iterate through list of bboxes
     for box in bbox_list:
         # Add += 1 for all pixels inside each bbox
@@ -106,15 +111,21 @@ def add_heat(heatmap, bbox_list):
         heatmap[box[0][1]:box[1][1], box[0][0]:box[1][0]] += 1
 
     # Return updated heatmap
-    return heatmap# Iterate through list of bboxes
+    return heatmap # Iterate through list of bboxes
     
 def apply_threshold(heatmap, threshold):
+    """
+    Apply threshold on the heatmap image to remove duplicates and false detections
+    """
     # Zero out pixels below the threshold
     heatmap[heatmap <= threshold] = 0
     # Return thresholded map
     return heatmap
 
 def draw_labeled_bboxes(img, labels):
+    """
+    Draw final detection labelled boxes
+    """
     # Iterate through all detected cars
     for car_number in range(1, labels[1]+1):
         # Find pixels with each car_number label value

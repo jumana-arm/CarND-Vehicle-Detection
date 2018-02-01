@@ -17,7 +17,14 @@ from vehicle_detection import feature_extraction as feature
 
 def train_hog_features(cars, noncars, hog_params, logger=None):
     """
+    Get hog features of images and train using SVC classifier
+    :cars: list of car images
+    :noncars: list of noncar images
+    :hogparams: dictionary of necessary hog parameters; colorspace, orientation, pixel per cell, cell per block, hog channel
     
+    :returns:
+    svc: trained classifier model
+    hog_svc_data: training results: accuracy, predcition time etc
     """
     cspace = hog_params['cspace']
     orient = hog_params['orient']

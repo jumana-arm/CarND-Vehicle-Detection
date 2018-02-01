@@ -6,6 +6,10 @@ from sklearn.preprocessing import StandardScaler
 from skimage.feature import hog
 import glob
 
+
+#### MOST OF THE CODE TAKEN FROM COURSE
+#### COLOR FEATURES CAN BE USED WHEN EXPANDING THIS PROJECT IN FUTURE. 
+
 # HOG features
 def get_hog_features(img, orient, pix_per_cell, cell_per_block, 
                         vis=False, feature_vec=True):
@@ -29,7 +33,7 @@ def get_hog_features(img, orient, pix_per_cell, cell_per_block,
                        visualise=vis, feature_vector=feature_vec)
         return features
     
-# Define a function to extract features from a list of images
+# Define a function to extract color features from a list of images
 # This function calls bin_spatial() and color_hist()
 def extract_color_features(imgs, cspace='RGB', spatial_size=(32, 32),
                         hist_bins=32, hist_range=(0, 256)):
@@ -50,8 +54,7 @@ def extract_color_features(imgs, cspace='RGB', spatial_size=(32, 32),
     # Return list of feature vectors
     return features
 
-# Define a function to extract features from a list of images
-# Have this function call bin_spatial() and color_hist()
+# Define a function to extract hog features from a list of images
 def extract_hog_features(imgs, cspace='RGB', orient=9, 
                         pix_per_cell=8, cell_per_block=2, hog_channel=0):
     # Create a list to append feature vectors to
