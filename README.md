@@ -18,4 +18,4 @@ The goals / steps of this project are the following:
 
 Project Report
 ----
-My project report is here: 
+My project report is hosted here: https://jumanamp.github.io/CarND-Vehicle-Detection/
