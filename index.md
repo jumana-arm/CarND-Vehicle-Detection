@@ -1,4 +1,4 @@
-**Author: Jumana Mundichipparakkal**
+**Vehicle Detection Project**
 
 The goals / steps of this project are the following:
 
@@ -17,9 +17,10 @@ The goals / steps of this project are the following:
 [image5]: ./output_images/readme/fig5.png
 [image6]: ./output_images/readme/fig6.png
 [image7]: ./output_images/readme/fig7.png
+[image8]: ./output_images/readme/fig8.png
 [video1]: ./project_video.mp4
 
-### Histogram of Oriented Gradients (HOG)
+### HISTOGRAM OF ORIENTED GRADIENTS (HOG)
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 _My Solution_:
@@ -47,7 +48,7 @@ I used this function to get the hog features. The code was more or less reused f
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
- **A.hog_param_exploration()**
+ **A. hog_param_exploration()**
     
     * Python Module: feature_extraction.py and classifier.py module in vehicle_detection package
 
@@ -67,7 +68,7 @@ Hog feature extraction is performed for both car images and non-car images using
 ### Final Results:
 I had done 287 combinations of hog parameters and was able to achieve an accuracy of 0.9868 as maximum. This took a training time of 6.20 seconds.  I listed the best 5 accuracy configurations and found a configuration which gave an accuracy of 0.9862 and training time of 0.71 seconds. 
 
-### Sliding Window Search
+### SLIDING WINDOW SEARCH
 _My Solution_:
 
    * Notebook: video_detection_sliding_window.ipynb
@@ -77,6 +78,7 @@ _My Solution_:
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
 **A. detect_cars()**
+
 I modified the find_cars() method given in lecture to also support multiple channels in Hog. This function extracts Hog features with the chosen hog parameters from last section and performs the prediction on the image using svc model obtained by performing a linear svc classification on car/non-car images. The method is adapted to do Hog feature extraction only for entire image only once and then while doing sliding window search inside the image , full image features are subsampled per window. This approach basically saves a lot of time instead of doing feature extraction on every single window. After performing classifier prediction of all windows, it returns the list of rectangle objects per positive car-existence predicted window. Figure 3 shows the number of rectangles detected as locations of car; there are 8 detections in this image, when windows are taken between 400 and 550.
 
 ![alt text][image3]
@@ -116,14 +118,14 @@ I used a threshold of 5 initially, but threshold has to be larger in this approa
 
 This function is used to finally draw a rectangle around all detected pixel regions in the thresholded heatmap image. 
 
-![alt text][image6]
+![alt text][image7]
 
    *Figure 7 Final detection of cars  as per the set of algorithms used for the image Figure 3*
 
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-##### Optimization Steps:
+### Optimization Steps:
 
 **1. car_location_exploration_fast()**
 
@@ -143,23 +145,18 @@ Here's a [link to my video result](./project_video_out.mp4)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected. 
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+Here are six frames and their corresponding heatmaps:
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+![alt text][image8]
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-### Here are six frames and their corresponding heatmaps:
+   *Figure 8 Final detection of cars  as per the set of algorithms used for the image Figure 3*
 
 For video images, I encountered getting a lot of false detections in the left side of the road as well as missing frames. To solve this, I took the approach of remembering detections from past frames as we did for advanced lane finding. I chose to remember rectangles from past 20 frames and then add it all on heat map. This means threshold values can be raised higher, considering the number of rectangles accumulated over frames. For final solution, after working with video frames., I chose threshold value of 10 which gets added by half of the total rectangles stored from past frames. 
 
-Class used for remembering past frames: carPosition() with and update_detected_car_data()
-
-Car detection_pipeline: detect_car_pipeline_video()
+  * Class used for remembering past frames: carPosition() with and update_detected_car_data()
+  * Car detection_pipeline: detect_car_pipeline_video()
 
 ---
 
