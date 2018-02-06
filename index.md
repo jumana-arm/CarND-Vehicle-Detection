@@ -1,4 +1,4 @@
-**Vehicle Detection Project**
+**Author: Jumana Mundichipparakkal**
 
 The goals / steps of this project are the following:
 
@@ -112,7 +112,7 @@ I used a threshold of 5 initially, but threshold has to be larger in this approa
    
  As can be seen, we had a lot of false detections in the left most end contributing to a false detection. 
  
-**D. draw_labeled_boxes()**
+**E. draw_labeled_boxes()**
 
 This function is used to finally draw a rectangle around all detected pixel regions in the thresholded heatmap image. 
 
@@ -129,7 +129,7 @@ This function is used to finally draw a rectangle around all detected pixel regi
 
 Reduce the sliding window search time: Last approach had a significant time cost. To solve this, I decided to choose less number of windows around maximum probability of detection of car in the image as well as decide the scaling size according to the distance from the camera. This time, I created a list of ystart and ystop positions as well as scaling values. This approach brought down the project video processing to around 10 minutes from one and half hours from past approach.
 
-**2. Threshold value: 
+**2. Threshold value:**
 
 Threshold value has to be reduced this time as number of rectangle detections have significantly reduced.  I had to go through  a bit of trail and error to eliminate all the false positives. I used this solution to experiment with images as well as project video to derive an appropriate threshold value. Threshold value was taken 1 this time and it seems to have worked fine for all test images. 
 
